@@ -41,7 +41,7 @@ const config = {
   },
   plugins: [
     new CleanWebpackPlugin(['dist']), // cleans the dist folder on every new build
-    new ExtractTextPlugin('css/styles.css'), // etracts css to dist/css/styles.css
+    new ExtractTextPlugin('css/[name].[hash].css'), // etracts css to dist/css/styles.css
     new HtmlWebpackPlugin({
       template: 'index.ejs', // creates an `index.html`-file from `index.ejs`
     }),

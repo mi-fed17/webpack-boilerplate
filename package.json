@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --mode development",
-    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js --mode production"
+    "build": "cross-env NODE_ENV=production webpack -p --progress --config webpack.config.js --mode production"
   },
   "keywords": [
     "webpack",

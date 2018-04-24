@@ -1,6 +1,7 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const autoprefixer = require('autoprefixer');
 const path = require('path');
 
 const config = {
@@ -17,8 +18,17 @@ const config = {
       {
         test: /\.s?css$/,
         use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader!sass-loader',
+          use: [
+            'css-loader',
+            {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: true,
+                plugins: () => [autoprefixer()],
+              },
+            },
+            'sass-loader',
+          ],
         }),
       },
       {
@@ -27,7 +37,17 @@ const config = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-stage-2'],
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  targets: {
+                    browsers: ['>0.25%', 'not ie 11', 'not op_mini all'],
+                  },
+                },
+              ],
+              ['@babel/preset-stage-2'],
+            ],
           },
         },
       },

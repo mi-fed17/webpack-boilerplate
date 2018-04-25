@@ -1,4 +1,4 @@
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const autoprefixer = require('autoprefixer');
@@ -17,19 +17,22 @@ const config = {
     rules: [
       {
         test: /\.s?css$/,
-        use: ExtractTextPlugin.extract({
-          use: [
-            'css-loader',
-            {
-              loader: 'postcss-loader',
-              options: {
-                sourceMap: true,
-                plugins: () => [autoprefixer()],
-              },
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
+              plugins: () => [
+                autoprefixer({
+                  browsers: ['last 3 versions', '> 1%'],
+                }),
+              ],
             },
-            'sass-loader',
-          ],
-        }),
+          },
+          'sass-loader',
+        ],
       },
       {
         test: /\.js$/,
@@ -61,7 +64,9 @@ const config = {
   },
   plugins: [
     new CleanWebpackPlugin(['dist']), // cleans the dist folder on every new build
-    new ExtractTextPlugin('css/[name].[hash].css'), // etracts css to dist/css/styles.css
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].[hash].css',
+    }),
     new HtmlWebpackPlugin({
       template: 'index.ejs', // creates an `index.html`-file from `index.ejs`
     }),

@@ -26,6 +26,7 @@ const config = {
               sourceMap: true,
               plugins: () => [
                 autoprefixer({
+                  // which browsers to prefix css for: http://browserl.ist/
                   browsers: ['last 3 versions', '> 1%'],
                 }),
               ],
@@ -45,6 +46,7 @@ const config = {
                 '@babel/preset-env',
                 {
                   targets: {
+                    // which browsers to convert javascript for: http://browserl.ist/
                     browsers: ['>0.25%', 'not ie 11', 'not op_mini all'],
                   },
                 },
